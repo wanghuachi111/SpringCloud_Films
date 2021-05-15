@@ -14,6 +14,7 @@ import com.mooc.meetingfilm.utils.common.exception.CommonServiceException;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -88,8 +89,13 @@ public class FilmServiceImpl implements FilmServiceAPI {
      * @Author: whc
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveFilm(FilmSavedReqVO filmSavedReqVO) throws CommonServiceException {
+        try {
 
+        } catch (Exception e) {
+            throw new CommonServiceException(500, e.getMessage());
+        }
     }
 
 
