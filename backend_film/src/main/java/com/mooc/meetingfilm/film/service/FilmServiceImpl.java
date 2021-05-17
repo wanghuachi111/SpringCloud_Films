@@ -16,6 +16,7 @@ import com.mooc.meetingfilm.film.dao.mapper.MoocFilmActorTMapper;
 import com.mooc.meetingfilm.film.dao.mapper.MoocFilmInfoTMapper;
 import com.mooc.meetingfilm.film.dao.mapper.MoocFilmTMapper;
 import com.mooc.meetingfilm.utils.common.exception.CommonServiceException;
+import com.mooc.meetingfilm.utils.common.util.ToolUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -103,40 +104,49 @@ public class FilmServiceImpl implements FilmServiceAPI {
         try {
             //保存电影主表
             MoocFilmT filmT = new MoocFilmT();
-            filmT.setFilmName("");
-            filmT.setFilmType(0);
-            filmT.setImgAddress("");
-            filmT.setFilmScore("");
-            filmT.setFilmPresalenum(0);
-            filmT.setFilmBoxOffice(0);
-            filmT.setFilmSource(0);
-            filmT.setFilmCats("");
-            filmT.setFilmArea(0);
-            filmT.setFilmDate(0);
-            filmT.setFilmTime(LocalDateTime.now());
-            filmT.setFilmStatus(0);
+            filmT.setFilmName(filmSavedReqVO.getFilmName());
+            filmT.setFilmType(ToolUtils.str2Int(filmSavedReqVO.getFilmTypeId()));
+            filmT.setImgAddress(filmSavedReqVO.getMainImgAddress());
+            filmT.setFilmScore(filmSavedReqVO.getFilmScore());
+            filmT.setFilmPresalenum(ToolUtils.str2Int(filmSavedReqVO.getPreSaleNum()));
+            filmT.setFilmBoxOffice(ToolUtils.str2Int(filmSavedReqVO.getBoxOffice()));
+            filmT.setFilmSource(ToolUtils.str2Int(filmSavedReqVO.getFilmSourceId()));
+            filmT.setFilmCats(filmSavedReqVO.getFilmCatIds());
+            filmT.setFilmArea(ToolUtils.str2Int(filmSavedReqVO.getAreaId()));
+            filmT.setFilmDate(ToolUtils.str2Int(filmSavedReqVO.getDateId()));
+            filmT.setFilmTime(ToolUtils.str2LocalDateTime(filmSavedReqVO.getFilmTime() + " 00:00:00"));
+            filmT.setFilmStatus(ToolUtils.str2Int(filmSavedReqVO.getFilmStatus()));
 
             filmTMapper.insert(filmT);
 
             //保存电影子表
             MoocFilmInfoT filmInfoT = new MoocFilmInfoT();
             filmInfoT.setFilmId(filmT.getUuid() + "");
-            filmInfoT.setFilmEnName("");
-            filmInfoT.setFilmScore("");
-            filmInfoT.setFilmScoreNum(0);
-            filmInfoT.setFilmLength(0);
-            filmInfoT.setBiography("");
-            filmInfoT.setDirectorId(0);
-            filmInfoT.setFilmImgs("");
+            filmInfoT.setFilmEnName(filmSavedReqVO.getFilmEnName());
+            filmInfoT.setFilmScore(filmSavedReqVO.getFilmScore());
+            filmInfoT.setFilmScoreNum(ToolUtils.str2Int(filmSavedReqVO.getFilmScorers()));
+            filmInfoT.setFilmLength(ToolUtils.str2Int(filmSavedReqVO.getFilmLength()));
+            filmInfoT.setBiography(filmSavedReqVO.getBiography());
+            filmInfoT.setDirectorId(ToolUtils.str2Int(filmSavedReqVO.getDirectorId()));
+            filmInfoT.setFilmImgs(filmSavedReqVO.getFilmImgs());
 
             filmInfoTMapper.insert(filmInfoT);
 
-            //保存演员映射表
-            MoocFilmActorT filmActorT = new MoocFilmActorT();
-            filmActorTMapper.insert(filmActorT);
-            filmActorT.setFilmId(filmT.getUuid());
-            filmActorT.setActorId(0);
-            filmActorT.setRoleName("");
+            String[] actorId = filmSavedReqVO.getActIds().split("#");
+            String[] roleNames = filmSavedReqVO.getRoleNames().split("#");
+            if (actorId.length != roleNames.length) {
+                throw new CommonServiceException(500, "演员和角色名数量不匹配");
+            }
+
+            for (int i = 0; i < actorId.length; i++) {
+                //保存演员映射表
+                MoocFilmActorT filmActorT = new MoocFilmActorT();
+                filmActorT.setFilmId(filmT.getUuid());
+                filmActorT.setActorId(ToolUtils.str2Int(actorId[i]));
+                filmActorT.setRoleName(roleNames[i]);
+                filmActorTMapper.insert(filmActorT);
+            }
+
 
 
         } catch (Exception e) {
