@@ -7,7 +7,6 @@ import com.mooc.meetingfilm.film.controller.vo.DescribeActorsRespVO;
 import com.mooc.meetingfilm.film.controller.vo.DescribeFilmRespVO;
 import com.mooc.meetingfilm.film.controller.vo.DescribeSingleFilmRespVO;
 import com.mooc.meetingfilm.film.controller.vo.FilmSavedReqVO;
-import com.mooc.meetingfilm.film.dao.entity.MoocActorT;
 import com.mooc.meetingfilm.film.dao.entity.MoocFilmActorT;
 import com.mooc.meetingfilm.film.dao.entity.MoocFilmInfoT;
 import com.mooc.meetingfilm.film.dao.entity.MoocFilmT;
@@ -18,13 +17,8 @@ import com.mooc.meetingfilm.film.dao.mapper.MoocFilmTMapper;
 import com.mooc.meetingfilm.utils.common.exception.CommonServiceException;
 import com.mooc.meetingfilm.utils.common.util.ToolUtils;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 
 /**
