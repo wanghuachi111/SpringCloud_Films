@@ -1,12 +1,17 @@
 package com.mooc.meetingfilm.cinema.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Maps;
 import com.mooc.meetingfilm.cinema.controller.vo.CinemaSavedReqVO;
+import com.mooc.meetingfilm.cinema.controller.vo.DescribeCinemasRespVO;
 import com.mooc.meetingfilm.cinema.service.CinemaServiceAPI;
 import com.mooc.meetingfilm.utils.common.exception.CommonServiceException;
 import com.mooc.meetingfilm.utils.common.vo.BasePageVO;
 import com.mooc.meetingfilm.utils.common.vo.BaseResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author whc
@@ -37,9 +42,23 @@ public class CinemaController {
     @GetMapping("")
     public BaseResponseVO describeCinemas(BasePageVO basePageVO) throws CommonServiceException {
 
-        cinemaServiceAPI.describeCinemas(basePageVO.getNowPage(), basePageVO.getPageSize());
+        IPage<DescribeCinemasRespVO> result = cinemaServiceAPI.describeCinemas(basePageVO.getNowPage(), basePageVO.getPageSize());
 
-        return BaseResponseVO.success();
+        Map<String, Object> cinemas = describePageResult(result, "cinemas");
+
+        return BaseResponseVO.success(cinemas);
+    }
+
+    //获取分页对象的公共接口
+    private Map<String, Object> describePageResult(IPage page, String title) {
+        Map<String, Object> result = Maps.newHashMap();
+
+        result.put("totalSize",page.getTotal());
+        result.put("totalPage",page.getPages());
+        result.put("pageSize",page.getSize());
+        result.put("nowPage",page.getCurrent());
+        result.put(title,page.getRecords());
+        return result;
     }
 
 }

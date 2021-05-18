@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 public interface CinemaServiceAPI {
 
+    //保存or新增影院
     void saveCinema(CinemaSavedReqVO reqVO) throws CommonServiceException;
 
+    //查询影院
     IPage<DescribeCinemasRespVO> describeCinemas(int nowPage, int pageSize) throws CommonServiceException;
 }
