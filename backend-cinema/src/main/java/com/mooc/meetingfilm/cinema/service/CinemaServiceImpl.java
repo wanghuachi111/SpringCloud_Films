@@ -8,9 +8,7 @@ import com.mooc.meetingfilm.cinema.dao.entity.MoocCinemaT;
 import com.mooc.meetingfilm.cinema.dao.mapper.MoocCinemaTMapper;
 import com.mooc.meetingfilm.utils.common.exception.CommonServiceException;
 import com.mooc.meetingfilm.utils.common.util.ToolUtils;
-import com.netflix.discovery.converters.Auto;
 import lombok.Data;
-import org.apache.ibatis.javassist.runtime.Desc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +21,16 @@ import java.util.List;
  * @Title: CinemaServiceImpl
  * @Package: com.mooc.meetingfilm.cinema.service
  * @Description:
- * @date 2021/5/18 15:42
+ * @date 2021/6/3 23:04
  */
+
 @Data
 @Service
-public class CinemaServiceImpl implements CinemaServiceAPI {
+public class CinemaServiceImpl implements CinemaServiceAPI{
 
     @Resource
     private MoocCinemaTMapper cinemaTMapper;
+
 
     @Override
     public void saveCinema(CinemaSavedReqVO reqVO) throws CommonServiceException {
@@ -47,15 +47,13 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
         moocCinemaT.setMinimumPrice(ToolUtils.str2Int(reqVO.getCinemaPrice()));
 
         cinemaTMapper.insert(moocCinemaT);
-
     }
 
     @Override
     public IPage<DescribeCinemasRespVO> describeCinemas(int nowPage, int pageSize) throws CommonServiceException {
 
-
         // 查询实体对象，然后与表现层对象进行交互
-        Page<MoocCinemaT> page = new Page<>(nowPage,pageSize);
+        Page<MoocCinemaT> page = new Page<>(nowPage, pageSize);
         IPage<MoocCinemaT> moocCinemaTIPage = cinemaTMapper.selectPage(page, null);
 
         // moocCinemaTIPage对象内的分页参数与IPage<DescribeCinemasRespVO>一模一样
@@ -80,6 +78,4 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
 
         return respVOIPage;
     }
-
-
 }

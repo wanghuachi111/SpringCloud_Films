@@ -11,7 +11,7 @@
     <groupId>com.mooc.meetingfilm</groupId>
     <artifactId>backend-hall</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>backend-hall</name>
+    <name>backend_hall</name>
     <description>播放厅模块</description>
     <properties>
         <java.version>1.8</java.version>

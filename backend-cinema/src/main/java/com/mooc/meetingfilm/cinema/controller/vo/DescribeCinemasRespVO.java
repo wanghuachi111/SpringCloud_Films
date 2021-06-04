@@ -7,8 +7,9 @@ import lombok.Data;
  * @Title: DescribeCinemasRespVO
  * @Package: com.mooc.meetingfilm.cinema.controller.vo
  * @Description:
- * @date 2021/5/18 15:50
+ * @date 2021/6/3 23:01
  */
+
 @Data
 public class DescribeCinemasRespVO {
 

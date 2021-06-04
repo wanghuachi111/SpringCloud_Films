@@ -21,7 +21,7 @@ import java.util.Map;
 public class EntityGenerator {
 
     // 生成输出目录，定位到工程的java目录下
-    private String outputDir = "E:\\iMooc学习文件\\backend_parent\\backend_common\\src\\main\\java";
+    private String outputDir = "/Users/whc/CodeFiles/SpringCloud_Films/backend_common/src/main/java";
     // 生成类的作者
     private String author = "whc";
     // 数据源相关配置
