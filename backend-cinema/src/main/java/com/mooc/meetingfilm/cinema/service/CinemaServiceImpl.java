@@ -9,7 +9,6 @@ import com.mooc.meetingfilm.cinema.dao.mapper.MoocCinemaTMapper;
 import com.mooc.meetingfilm.utils.common.exception.CommonServiceException;
 import com.mooc.meetingfilm.utils.common.util.ToolUtils;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -38,8 +38,6 @@ public class ConsumerServiceImpl implements ConsumerServiceAPI {
         //invoker provider test
         String result = restTemplate.getForObject(url, String.class);
 
-
-
         return result;
     }
 }
